@@ -27,11 +27,17 @@ for (i=0; i<10; i++) {
         text:'I am row '+i,
         textAlign:'left',
     });
-    var row = Ti.UI.createTableViewRow();
+    var row = Ti.UI.createTableViewRow({
+        editable: true
+    });
     row.add(label1);
     rows.push(row);
 }
 table.setData(rows);
+table.addEventListener('delete', function(e) {
+    var label = e.row.children[0];
+    alert("you just deleted the "+e.index+"th row\n ["+label.text+"]");
+});
 
 win1.add(table);
 
