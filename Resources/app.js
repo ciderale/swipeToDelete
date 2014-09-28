@@ -22,13 +22,24 @@ var tab1 = Titanium.UI.createTab({
 var table = Ti.UI.createTableView();
 var rows = [];
 for (i=0; i<10; i++) {
+    var editable = i%2==0;
+    var child = i%3 ==0;
+    var txt = 'I am row ' + i;
+    if (editable) {
+        txt += '\n(editable)';
+    }
+    if (child) {
+        txt += '\n(with child)';
+    }
     var label1 = Titanium.UI.createLabel({
         color:'#999',
-        text:'I am row '+i,
+        text:txt,
         textAlign:'left',
+        borderColor:'black'
     });
     var row = Ti.UI.createTableViewRow({
-        editable: true
+        editable: editable,
+        hasChild: child,
     });
     row.add(label1);
     rows.push(row);

@@ -164,6 +164,7 @@ describe("SwipeToDelete Module", function() {
             table.fireEvent('rowswipe', {direction:"left", index:0, row:row});
             waits(1000);
             runs(function(){
+                expect(row.hasChild).toEqual(false, "hasChild is removed");
                 if (Ti.Platform.name==="android") {
                     //android-test does not bubble up to table..
                     table.fireEvent('touchstart', {source:{id:'somethingelse'}});
@@ -176,6 +177,7 @@ describe("SwipeToDelete Module", function() {
             runs(function(){
                 expect(row.children.length).toEqual(1, "button is gone");
                 expect(table.data[0].rows.length).toEqual(2, "still 2 rows");
+                expect(row.hasChild).toEqual(true, "hasChild is restored");
             });
         })
     })

@@ -93,6 +93,7 @@ exports.emulateRowDeleteEvents = function (table, forceIOS) {
         var width = 100, fading = 300;
         var height = row.children.length===0 ?
             row.height : row.children[0].rect.height
+        var didHaveChild = row.hasChild;
         var btn = Ti.UI.createLabel({ id: "swipeDelete",
                 text:txt, textAlign: "center",
                 backgroundColor:"red", color:"white",
@@ -103,7 +104,13 @@ exports.emulateRowDeleteEvents = function (table, forceIOS) {
             // double check that btn & row still exist..
             // the row (and maybe the button) have been destroyed by a table update
             btn && btn.animate({width:0, duration:fading}, function() {
-                row && row.remove(btn);
+                if (!row) {
+                    return;
+                }
+                if (didHaveChild) {
+                    row.hasChild = true;
+                }
+                row.remove(btn);
                 row = btn = null;
                 Ti.API.info("removed");
                 if (e.source.id==='swipeDelete') {
@@ -112,6 +119,7 @@ exports.emulateRowDeleteEvents = function (table, forceIOS) {
             });
         }
         table.addEventListener('touchstart', buttonRemover);
+        row.hasChild = false;
         row.add(btn);
         btn.animate({width:width, duration:fading}, function() {
             // the hide/show is a workaround to enforce screen redraw
