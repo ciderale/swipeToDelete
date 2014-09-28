@@ -108,7 +108,7 @@ describe("SwipeToDelete Module", function() {
 
     describe("SwipeToDelete ", function() {
         beforeEach(function() {
-            require('swipeToDelete').emulateRowDeleteEvents(table);
+            require('swipeToDelete').emulateRowDeleteEvents(table, true);
         });
 
         [0,1].forEach(function(theindex){

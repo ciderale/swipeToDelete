@@ -39,15 +39,15 @@ exports.emulateRowSwipeEvents = function (table, SENSITIVITY) {
     }
 };
 
-exports.emulateRowDeleteEvents = function (table) {
+exports.emulateRowDeleteEvents = function (table, forceIOS) {
     // popup seems to work stable, while emulating iOS style has redraw/update issues..
     // => may the redraw problems are just a simulator thing
     // => currently resolving the problem with a hide/show of the entire table
     var MIMIC_IOS = true;
     var SENSITIVITY = 3;
 
-    if (Ti.Platform.name!=="android") {
-        //return; // only required on android, built-in for iOS
+    if (!forceIOS && Ti.Platform.name!=="android") {
+        return; // only required on android, built-in for iOS
     }
     exports.emulateRowSwipeEvents(table, SENSITIVITY);
 
