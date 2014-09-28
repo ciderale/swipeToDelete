@@ -1,8 +1,24 @@
-Welcome to your Appcelerator Titanium Mobile Project
+This app demonstrates and test how to delete a row by a swipe left gesture.
+- iOS natively provides this feautre, but android does not
+- this app includes a library (swipeToDelete.js) that emulates this gesture
 
-This is a blank project.  Start by editing your application's app.js to 
-make your first mobile project using Titanium.
+Usage:
+- simply add the following line to your table creation code:
+    require('swipeToDelete').emulateRowDeleteEvents(table);
+- and add an event handle for custom actions on delete:
+    table.addEventListener('delete', function(e) {/*do some thing*/});
 
+Testing:
+- tests can be run with 'tishadow --platform=android spec'
+  some test are not stable on android (problems relate to the event system)
+- tests run smoothly on iOS : 'tishadow --platform=ios spec'
+  but use the iOS native fuctionality in the real app.
+
+Note:
+- redrawing of the table after swipe/delete gestures is not always working
+  maybe this is only a problem on the simulator.
+  currently the table is forced to redraw with a hide/show combo,
+  which might give some flickering artefacts.
 
 
 ----------------------------------
