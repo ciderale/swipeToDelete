@@ -13,9 +13,9 @@ describe("SwipeToDelete Module", function() {
         win = Ti.UI.createWindow({layout:'vertical'});
         table = Ti.UI.createTableView();
         row = createRow("Row A",
-            {backgroundColor:"green", hasChild:true,selectionStyle:"None"});
+            {backgroundColor:"green", hasChild:true,selectionStyle:"None", editable:true});
         row2 = createRow("Row B",
-            {backgroundColor:"blue", hasChild:false,selectionStyle:"None"});
+            {backgroundColor:"blue", hasChild:false,selectionStyle:"None", editable:true});
         rows = [row,row2];
         table.setData(rows);
         win.add(table);
@@ -122,6 +122,21 @@ describe("SwipeToDelete Module", function() {
             })
         });
         });
+
+        it("should only work on editable rows", function() {
+            var fixRow = createRow("not editable", {editable:false});
+            rows = [row, row2, fixRow];
+            table.setData(rows);
+            var theindex = 2;
+            var evt = {direction:"left", index:theindex, row:rows[theindex]};
+            table.fireEvent('rowswipe', evt);
+            waits(100);
+            runs(function(){
+                [0,1,2].forEach(function(theindex){
+                expect(rows[theindex].children.length).toEqual(1, "no delete button on other row");
+                });
+            });
+        })
 
         it("touching the delete button removes the row", function() {
             var delEvt={};

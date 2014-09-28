@@ -53,6 +53,10 @@ exports.emulateRowDeleteEvents = function (table, forceIOS) {
 
     function swipe(e) {
         Ti.API.debug("swipe in direction: "+e.direction);
+        if (!e.row.editable) {
+            Ti.API.debug("this row is not editable");
+            return;
+        }
         if (e.direction==='left') {
             Ti.API.info("delete swipe for row: " + e.index);
             var doDelete = function () {
