@@ -45,7 +45,8 @@ for (i=0; i<10; i++) {
     rows.push(row);
 }
 table.setData(rows);
-require('swipeToDelete').emulateRowDeleteEvents(table);
+//forceIOS=true to allow calabash testing  swipeToDelete on ios (this should not be used normally)
+require('swipeToDelete').emulateRowDeleteEvents(table, true);
 table.addEventListener('delete', function(e) {
     var label = e.row.children[0];
     alert("you just deleted the "+e.index+"th row\n ["+label.text+"]");

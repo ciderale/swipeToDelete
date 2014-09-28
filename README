@@ -13,6 +13,7 @@ Testing:
   some test are not stable on android (problems relate to the event system)
 - tests run smoothly on iOS : 'tishadow --platform=ios spec'
   but use the iOS native fuctionality in the real app.
+- calabash acceptance test (currently iOS only): bash ios_calabash.sh
 
 Note:
 - redrawing of the table after swipe/delete gestures is not always working
